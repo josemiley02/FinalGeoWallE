@@ -1,0 +1,8 @@
+point P;
+point Q;
+C = circle(P,50);
+C1 = circle(Q,50);
+draw {C,C1};
+L = line(P,Q);
+draw {L};
+draw{P,Q};

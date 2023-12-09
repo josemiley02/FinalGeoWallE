@@ -1,0 +1,6 @@
+point a;
+point b;
+point c;
+draw{a,b,c};
+x = arc(a,b,c,50);
+draw{x};

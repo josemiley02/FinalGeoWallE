@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{37DFB890-78C3-4590-A028-1DECF897921F}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Geo_Wall_E</RootNamespace>
+    <AssemblyName>Geo Wall E</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <ApplicationIcon>logo1.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Geo_Wall_E.Program</StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CallLogic\CallLogic.cs" />
+    <Compile Include="Gsharp\CompilatorsTools\CompilatorTools.cs" />
+    <Compile Include="Gsharp\Figures\Arc.cs" />
+    <Compile Include="Gsharp\Figures\Circle.cs" />
+    <Compile Include="Gsharp\Figures\Generic.cs" />
+    <Compile Include="Gsharp\Figures\Line.cs" />
+    <Compile Include="Gsharp\Figures\Point.cs" />
+    <Compile Include="Gsharp\Figures\RayAndSegment.cs" />
+    <Compile Include="Gsharp\Lexer\Lexer.cs" />
+    <Compile Include="Gsharp\Lexer\Token.cs" />
+    <Compile Include="Gsharp\Nodes\Expresions\Atomics\Atomics.cs" />
+    <Compile Include="Gsharp\Nodes\Expresions\Atomics\NumberLiteral.cs" />
+    <Compile Include="Gsharp\Nodes\Expresions\Atomics\SequenceLiteral.cs" />
+    <Compile Include="Gsharp\Nodes\Expresions\Atomics\StringLiteral.cs" />
+    <Compile Include="Gsharp\Nodes\Expresions\Atomics\Undefined.cs" />
+    <Compile Include="Gsharp\Nodes\Expresions\BinaryOperators\ArithmeticExpression.cs" />
+    <Compile Include="Gsharp\Nodes\Expresions\BinaryOperators\BinaryExpressions.cs" />
+    <Compile Include="Gsharp\Nodes\Expresions\BinaryOperators\ComparativeExpression.cs" />
+    <Compile Include="Gsharp\Nodes\Expresions\BinaryOperators\LogicOperators.cs" />
+    <Compile Include="Gsharp\Nodes\Expresions\Expressions.cs" />
+    <Compile Include="Gsharp\Nodes\Expresions\Figures\CircleExpression.cs" />
+    <Compile Include="Gsharp\Nodes\Expresions\Figures\LineExpression.cs" />
+    <Compile Include="Gsharp\Nodes\Expresions\Figures\PointExpression.cs" />
+    <Compile Include="Gsharp\Nodes\Expresions\ID\VariableExpression.cs" />
+    <Compile Include="Gsharp\Nodes\Expresions\UnaryOperators\UnaryExpressions.cs" />
+    <Compile Include="Gsharp\Nodes\Nodes.cs" />
+    <Compile Include="Gsharp\Nodes\Statements\Assigment\Assigment.cs" />
+    <Compile Include="Gsharp\Nodes\Statements\Assigment\Multiple Assigment.cs" />
+    <Compile Include="Gsharp\Nodes\Statements\Color\ColorStatements.cs" />
+    <Compile Include="Gsharp\Nodes\Statements\Conditional\ConditionalExpression.cs" />
+    <Compile Include="Gsharp\Nodes\Statements\Draw\Draw Statement.cs" />
+    <Compile Include="Gsharp\Nodes\Statements\Function Declaration\Declared Functions.cs" />
+    <Compile Include="Gsharp\Nodes\Statements\Function Declaration\Executable Functions.cs" />
+    <Compile Include="Gsharp\Nodes\Statements\Function Declaration\Predefined Functions.cs" />
+    <Compile Include="Gsharp\Nodes\Statements\FunctionCall\Function Call.cs" />
+    <Compile Include="Gsharp\Nodes\Statements\Import\ImportStatement.cs" />
+    <Compile Include="Gsharp\Nodes\Statements\Let-In\LetInExpression.cs" />
+    <Compile Include="Gsharp\Nodes\Statements\Statements.cs" />
+    <Compile Include="Gsharp\Parser\Parser.cs" />
+    <Compile Include="Gsharp\Scope\Scope.cs" />
+    <Compile Include="Gsharp\Types\measure.cs" />
+    <Compile Include="Gsharp\Types\Sequences.cs" />
+    <Compile Include="Gsharp\Types\SystemFunctions.cs" />
+    <Compile Include="Gsharp\Types\types.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Work.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Work.Designer.cs">
+      <DependentUpon>Work.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Menu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Menu.Designer.cs">
+      <DependentUpon>Menu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Menu.resx">
+      <DependentUpon>Menu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Work.resx">
+      <DependentUpon>Work.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\_ffe64727-58a4-490e-8dff-5ddd3b00db25.jpeg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Logo.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\logo1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\logo1.5.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="logo1.ico" />
+    <None Include="Resources\DERECHA.png" />
+    <None Include="Resources\ABAJO.png" />
+    <None Include="Resources\IZQUIERDA.png" />
+    <None Include="Resources\ARRIBA.png" />
+    <None Include="Resources\pngwing.com %284%29.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

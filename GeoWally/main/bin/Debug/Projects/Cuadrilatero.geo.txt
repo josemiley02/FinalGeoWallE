@@ -1,0 +1,14 @@
+
+point A;
+draw{A};
+point B;
+draw{B};
+point C;
+draw{C};
+point D;
+draw{D};
+s1 = segment(A,B);
+s2 = segment(B,C);
+s3 = segment(C,D);
+s4 = segment(D,A);
+draw{s1,s2,s3,s4};

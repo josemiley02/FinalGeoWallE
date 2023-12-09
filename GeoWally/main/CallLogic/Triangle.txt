@@ -1,0 +1,8 @@
+point P;
+point Q;
+point R;
+L1 = line(P,Q);
+L2 = line(Q,R);
+L3 = line(R,P);
+draw{L1,L2,L3};
+draw{P,Q,R};
