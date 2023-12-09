@@ -31,7 +31,7 @@ namespace Gsharp
         {
             if (parameter.ReturnType == WallyType.Sequence)
             {
-                Sequence<IExpression> sequence = (Sequence<IExpression>)parameter.Evaluate();
+                Sequence sequence = (Sequence)parameter.Evaluate();
 
                 foreach (IExpression element in sequence)
                 {
@@ -44,7 +44,7 @@ namespace Gsharp
             }
             if(parameter.ReturnType == WallyType.Sequence)
             {
-                Sequence<IExpression> sequence = (Sequence<IExpression>)parameter.Evaluate();
+                Sequence sequence = (Sequence)parameter.Evaluate();
                 
                 foreach(IExpression element in sequence)
                 {

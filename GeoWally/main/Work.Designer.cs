@@ -232,6 +232,7 @@
             this.ErrorShow.Location = new System.Drawing.Point(1178, 194);
             this.ErrorShow.Multiline = true;
             this.ErrorShow.Name = "ErrorShow";
+            this.ErrorShow.ReadOnly = true;
             this.ErrorShow.Size = new System.Drawing.Size(160, 94);
             this.ErrorShow.TabIndex = 12;
             // 

@@ -35,7 +35,7 @@ namespace Gsharp
         {
             if(ReturnType == WallyType.Sequence)
             {
-                var SequenceExp = new SequenceLiteralExpression((Sequence<IExpression>)Evaluate());
+                var SequenceExp = new SequenceLiteralExpression((Sequence)Evaluate());
                 return SequenceExp.ConvertToBool();
             }
             return (double)Evaluate() != 0 ;

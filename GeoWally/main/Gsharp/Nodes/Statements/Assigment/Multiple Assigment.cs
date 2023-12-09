@@ -37,7 +37,7 @@ namespace Gsharp
                 }
             }
 
-            Sequence<IExpression> values = (Sequence<IExpression>) valueExpression.Evaluate();
+            Sequence values = (Sequence)valueExpression.Evaluate();
             var SequenceEnumerator = values.GetEnumerator();
             
             for(int i = 0 ; i < variableNames.Count ; i++)

@@ -5,101 +5,153 @@ using System.Linq;
 
 namespace Gsharp
 {
-    public abstract class Sequence<T> : IEnumerable<T>
+    public sealed class Sequence : IEnumerable<IExpression>
     {
-        public abstract int Count {get;}
-        public abstract IEnumerator<T> GetEnumerator();
+        public Sequence(IEnumerable<IExpression> data)
+        {
+            this.data = data;
+            isInRange = false ;
+        }
+        public Sequence(int min , int max)
+        {
+            this.min = min ;
+            this.max = max ;
+            isInRange = true ;
+            data = new List<IExpression>();
+        }
+        private readonly bool isInRange ;
+        private readonly int min ;
+        private readonly int max ;
+        public WallyType ItemsType
+        {
+            get{
+                if(isInRange)
+                    return WallyType.Number ;
+                
+                return GetItemsType();
+            }
+        }
+
+        private WallyType GetItemsType()
+        {
+            var classEnumerator = GetEnumerator() ;
+
+            if(! classEnumerator.MoveNext())
+                return WallyType.Undefined ;
+            
+            WallyType returnType = classEnumerator.Current.ReturnType ;
+            foreach (var item in data)
+            {
+                if(item.ReturnType != returnType && item.ReturnType != WallyType.Undefined)
+                    throw new ArgumentException($"Sequence's elements must have the same return type : {item}");
+            }
+            return returnType ;
+        }
+
+        private readonly IEnumerable<IExpression> data ;
+        
+        public int Count()
+        {
+            if(isInRange)
+                return (max == int.MaxValue)? -1 : max - min ;
+            return data.Count() ;
+        }
+
+        public IEnumerator<IExpression> GetEnumerator()
+        {
+            if(isInRange)
+                return new InRangeEnumerator(min , max);
+            return data.GetEnumerator();
+        }
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
         }
-        public static IEnumerable<T> Concatenate(Sequence<T> sequence1 , Sequence<T> sequence2)
+        public static Sequence operator +(Sequence a , Sequence b)
         {
-            foreach(var item in sequence1)
-                yield return item ;
+            return new Sequence(Concatenate(a,b));
+        }
 
-            foreach (var item in sequence2)
+        public static Sequence operator +(Sequence a , Undefined b)
+        {
+            return a;
+        }
+        public static IEnumerable<IExpression> Concatenate(Sequence a, Sequence b)
+        {
+            foreach (var itemA in a)
             {
-                yield return item ;
+                yield return itemA ;
+            }
+            foreach (var itemB in b)
+            {
+                yield return itemB ;
             }
         }
-
-        public abstract Sequence<T> Rest(int i);
-    }
-    public sealed class RegularSequence<T> : Sequence<T>
-    {
-        private IEnumerable<T> data ;
-        public override int Count => data.Count();
-        public RegularSequence(IEnumerable<T> values)
+        public Sequence Rest(int position)
         {
-            data = values;
-        }
-        public override IEnumerator<T> GetEnumerator()
-        {
-            return data.GetEnumerator();
+            if(isInRange)
+                return new Sequence(position + 1 , max);
+            return new Sequence(RestAsEnumerable(position));
         }
 
-        public static RegularSequence<T> operator + (RegularSequence<T> sequence1, Sequence<T>sequence2)
-        {
-            return new RegularSequence<T>(Concatenate(sequence1 , sequence2));
-        }
-        public override Sequence<T> Rest(int position)
-        {
-            return new RegularSequence<T>(RestEnumerable(position));
-        }
-        public IEnumerable<T> RestEnumerable(int position)
+        private IEnumerable<IExpression> RestAsEnumerable(int position)
         {
             int i = 0 ;
             foreach (var item in data)
             {
-                if( i >= position)
+                if(i > position)
                     yield return item ;
-                i++ ;
+                i ++ ;
             }
-        }
-        public override string ToString()
-        {
-            string output = "{" ;
-            foreach (var item in data)
-            {
-                output += item.ToString() + "," ;
-            }
-            return output + "}" ;
         }
     }
 
-    public sealed class RangedSequence : Sequence<IExpression>
+    public class Undefined
     {
-        public int Min { get ; private set  ;} 
-        public int Max { get ; private set ;}
-        public override int Count => (Max == int.MaxValue)? -1 : Max - Min ;
+        
+        public static Undefined operator +(Undefined a , object b)
+        {
+            return new Undefined();
+        }
+    }
 
-        public RangedSequence(int min, int max = int.MaxValue)
+    internal class InRangeEnumerator : IEnumerator<IExpression>
+    {
+        public InRangeEnumerator(int min, int max)
         {
-            Min = min ;
-            Max = max ;
+            Min = min;
+            Max = max;
+            Reset();
         }
-        public override IEnumerator<IExpression> GetEnumerator()
-        {
-            for(int k = Min ; k <= Max ; k++) yield return new NumberLiteralExpression(k) ;
-        }
-        public static RegularSequence<NumberLiteralExpression> operator + (RangedSequence sequence1, Sequence<IExpression> sequence2)
-        {
-            return new RegularSequence<NumberLiteralExpression>((IEnumerable<NumberLiteralExpression>)Concatenate(sequence1 , sequence2));
-        }
-        public override Sequence<IExpression> Rest(int position)
-        {
-            return new RangedSequence(position + 1 , Max);
-        }
+        public int Min { get; }
+        public int Max { get; }
+        private int num ;
+        private bool isCurrent ;
 
-        public override string ToString()
+        public IExpression Current
         {
-            string output = $"{{ {Min} ... " ;
+            get
+            {
+                if(isCurrent) return new NumberLiteralExpression(num);
+                throw new InvalidOperationException("SequenceInRange enumerator out of position");
+            }
             
-            if(Max != int.MaxValue){output += Max.ToString();}
-
-            return output + " }" ;
         }
 
+        object IEnumerator.Current => Current;
+
+        public void Dispose(){}
+
+        public bool MoveNext()
+        {
+            num ++ ;
+            isCurrent = num < Max;
+            return isCurrent ;
+        }
+
+        public void Reset()
+        {
+            num = Min - 1 ;
+        }
     }
 }

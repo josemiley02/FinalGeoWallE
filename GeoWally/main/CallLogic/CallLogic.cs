@@ -19,6 +19,9 @@ namespace Geo_Wall_E.CallLogic
             foreach(var item in syntax.Program)
             {
                 item.GetScope(scope);
+            }
+            foreach(var item in syntax.Program)
+            {
                 item.CheckSemantics();
             }
             return syntax;

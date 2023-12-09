@@ -13,7 +13,7 @@ namespace Gsharp
             if (sequence.ReturnType == WallyType.Undefined)
                 return new UndefinedExpression();
 
-            int count = ((Sequence<IExpression>)sequence.Evaluate()).Count;
+            int count = ((Sequence)sequence.Evaluate()).Count();
 
             if (count < 0)
                 return new UndefinedExpression();
@@ -72,7 +72,7 @@ namespace Gsharp
         {
             IFigure fig1 = (IFigure) expressions.ElementAt(0).Evaluate();
             IFigure fig2 = (IFigure) expressions.ElementAt(1).Evaluate();
-            return new RegularSequence<IExpression>(fig1.Intersect(fig2)) ;
+            return new Sequence(fig1.Intersect(fig2)) ;
         }
     }
 }

@@ -467,7 +467,7 @@ namespace Gsharp
             else if (Current.Type == TokenType.CloseKeyToken)
             {
                 NextToken();
-                return new SequenceLiteralExpression(new RegularSequence<IExpression>(Array.Empty<IExpression>()));
+                return new SequenceLiteralExpression(new Sequence(Array.Empty<IExpression>()));
             }
             return ParseRegularSequence();
         }
@@ -476,7 +476,7 @@ namespace Gsharp
         {
             List<IExpression> items = ParseExpressionList();
             MatchKind(TokenType.CloseKeyToken);
-            var sequence = new RegularSequence<IExpression>(items);
+            var sequence = new Sequence(items);
             return new SequenceLiteralExpression(sequence);
         }
 
@@ -488,7 +488,7 @@ namespace Gsharp
             int max = (Current.Type == TokenType.CloseKeyToken) ? int.MaxValue : int.Parse(NextToken().Value);
             MatchKind(TokenType.CloseKeyToken);
 
-            var sequence = new RangedSequence(min, max);
+            var sequence = new Sequence(min, max);
             return new SequenceLiteralExpression(sequence);
         }
     }

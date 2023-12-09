@@ -73,3 +73,14 @@ C:\Users\leyva\OneDrive\Desktop\GeoWally\GeoWally\main\obj\Debug\Geo Wall E.pdb
 C:\Users\leyva\OneDrive\Desktop\GeoWally\GeoWally\main\bin\Debug\Geo Wall E.exe.config
 C:\Users\leyva\OneDrive\Desktop\GeoWally\GeoWally\main\bin\Debug\Geo Wall E.exe
 C:\Users\leyva\OneDrive\Desktop\GeoWally\GeoWally\main\bin\Debug\Geo Wall E.pdb
+C:\Miguel\Nueva carpeta\PROYECTOS\FinalGeoWallE\GeoWally\main\bin\Debug\Geo Wall E.exe.config
+C:\Miguel\Nueva carpeta\PROYECTOS\FinalGeoWallE\GeoWally\main\bin\Debug\Geo Wall E.exe
+C:\Miguel\Nueva carpeta\PROYECTOS\FinalGeoWallE\GeoWally\main\bin\Debug\Geo Wall E.pdb
+C:\Miguel\Nueva carpeta\PROYECTOS\FinalGeoWallE\GeoWally\main\obj\Debug\Geo Wall E.csprojAssemblyReference.cache
+C:\Miguel\Nueva carpeta\PROYECTOS\FinalGeoWallE\GeoWally\main\obj\Debug\Geo_Wall_E.Menu.resources
+C:\Miguel\Nueva carpeta\PROYECTOS\FinalGeoWallE\GeoWally\main\obj\Debug\Geo_Wall_E.Work.resources
+C:\Miguel\Nueva carpeta\PROYECTOS\FinalGeoWallE\GeoWally\main\obj\Debug\Geo_Wall_E.Properties.Resources.resources
+C:\Miguel\Nueva carpeta\PROYECTOS\FinalGeoWallE\GeoWally\main\obj\Debug\Geo Wall E.csproj.GenerateResource.cache
+C:\Miguel\Nueva carpeta\PROYECTOS\FinalGeoWallE\GeoWally\main\obj\Debug\Geo Wall E.csproj.CoreCompileInputs.cache
+C:\Miguel\Nueva carpeta\PROYECTOS\FinalGeoWallE\GeoWally\main\obj\Debug\Geo Wall E.exe
+C:\Miguel\Nueva carpeta\PROYECTOS\FinalGeoWallE\GeoWally\main\obj\Debug\Geo Wall E.pdb

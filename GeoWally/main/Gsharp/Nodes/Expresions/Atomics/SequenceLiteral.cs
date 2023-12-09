@@ -6,17 +6,17 @@ namespace Gsharp
 {
     public sealed class SequenceLiteralExpression : IExpression
     {
-        private Sequence<IExpression> sequence ;
+        private Sequence sequence ;
         public WallyType ReturnType => WallyType.Sequence ;
         public WallyType itemsReturnType ;
-        public SequenceLiteralExpression(Sequence<IExpression> sequence)
+        public SequenceLiteralExpression(Sequence sequence)
         {
             this.sequence = sequence;
             itemsReturnType = GetItemsReturnType();
         }
         public void GetScope(Scope actual)
         {
-            if(sequence is RegularSequence<IExpression>)
+            if(sequence is Sequence)
             {
                 foreach (var expression in sequence)
                     expression.GetScope(actual);
@@ -24,7 +24,7 @@ namespace Gsharp
         }
         public void CheckSemantics()
         {
-            if(sequence is RegularSequence<IExpression>)
+            if(sequence is Sequence)
             {
                 foreach(var expression in sequence)
                     expression.CheckSemantics();
@@ -40,7 +40,7 @@ namespace Gsharp
         }
         private WallyType GetItemsReturnType()
         {
-            if(sequence is RangedSequence)
+            if(sequence is Sequence)
                 return WallyType.Number;
             
             WallyType temp = WallyType.Undefined ;
@@ -60,7 +60,7 @@ namespace Gsharp
         }
         public bool ConvertToBool()
         {
-            return sequence.Count != 0 ;
+            return sequence.Count() != 0 ;
         }
     }
     
