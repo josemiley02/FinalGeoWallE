@@ -14,7 +14,7 @@
             referencedScope = actual;
             valueExpression.GetScope(actual);
         }
-        public abstract void CheckSemantics();
+        public abstract WalleType CheckSemantics();
 
         public abstract void Execute();
     }
@@ -26,14 +26,10 @@
         {
             this.variableName = target;
         }
-        public override void GetScope(Scope actual)
+        public override WalleType CheckSemantics()
         {
-            base.GetScope(actual);
-            referencedScope.CreateVariableInstance(variableName, valueExpression.ReturnType);
-        }
-        public override void CheckSemantics()
-        {
-            valueExpression.CheckSemantics();
+            referencedScope.CreateVariableInstance( variableName , valueExpression.CheckSemantics() );
+            return WalleType.Void ;
         }
         public override void Execute()
         {

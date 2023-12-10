@@ -2,7 +2,7 @@
 {
     public interface IExpression : INode
     {
-        WallyType ReturnType { get; }
+        WalleType ReturnType { get; }
         object Evaluate();
         bool ConvertToBool();
     }

@@ -5,15 +5,15 @@ namespace Gsharp
     {
         string name;
         Circle circle;
-        public WallyType ReturnType => WallyType.Circle;
+        public WalleType ReturnType => WalleType.Circle;
 
         public CircleExpression(string name)
         {
             this.name = name;
         }
-        public void GetScope(Scope Actual){}
-
-        public void CheckSemantics(){}
+        public void GetScope(Scope actual){}
+        
+        public WalleType CheckSemantics() => WalleType.Void;
 
         public object Evaluate()
         {

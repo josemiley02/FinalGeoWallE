@@ -1,6 +1,6 @@
 ﻿namespace Gsharp
 {
-    public enum WallyType
+    public enum WalleType
     {
         Number, Text, Undefined, Sequence,Void, Line , Point , Segment , Ray , Arc , Circle, Measure
     }

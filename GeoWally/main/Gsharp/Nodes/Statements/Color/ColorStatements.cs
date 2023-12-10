@@ -3,7 +3,7 @@
     public sealed class RestoreStatement : IStatement
     {        
         public void GetScope(Scope Actual){}
-        public void CheckSemantics(){}
+        public WalleType CheckSemantics() => WalleType.Void;
         public void Execute() => CompilatorTools.RestoreColor();
         public override string ToString() => "restore" ;
     }
@@ -17,7 +17,7 @@
         }
 
         public void GetScope(Scope Actual){}
-        public void CheckSemantics(){}
+        public WalleType CheckSemantics() => WalleType.Void ;
 
         public void Execute() => CompilatorTools.AddColor(Color);
         public override string ToString() => "color " + Color.ToString();

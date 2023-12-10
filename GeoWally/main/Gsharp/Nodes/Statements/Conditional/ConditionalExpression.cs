@@ -7,7 +7,7 @@ namespace Gsharp
         private IExpression condition ;
         private IExpression trueBody ;
         private IExpression falseBody ;
-        public WallyType ReturnType => WallyType.Number;
+        public WalleType ReturnType => WalleType.Number;
 
         public ConditionalExpression(IExpression condition, IExpression trueBody, IExpression falseBody)
         {
@@ -23,14 +23,14 @@ namespace Gsharp
             falseBody.GetScope(actual);           
         }
 
-        public void CheckSemantics()
+        public WalleType CheckSemantics()
         {
             condition.CheckSemantics();
-            trueBody.CheckSemantics();
-            falseBody.CheckSemantics();
-
-            if(trueBody.ReturnType != falseBody.ReturnType)
+            
+            if(trueBody.CheckSemantics() != falseBody.CheckSemantics())
                 throw new InvalidOperationException("Then-Else branches of conditional statement must have the same return type : {this}");
+
+            return trueBody.ReturnType ;
         }
         public object Evaluate()
         {

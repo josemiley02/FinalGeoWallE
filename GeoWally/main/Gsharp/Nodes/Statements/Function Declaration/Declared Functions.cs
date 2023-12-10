@@ -9,7 +9,7 @@ namespace Gsharp
         private Scope localScope;
 
         public override int Count => parametersName.Count;
-        public override WallyType ReturnType => Body.ReturnType;
+        public override WalleType ReturnType => Body.ReturnType;
 
         public DeclaredFunctionExpression(string name, List<string> parameters, IExpression body) : base(name)
         {
@@ -21,7 +21,7 @@ namespace Gsharp
             localScope = new Scope(actual);
             Body.GetScope(localScope);
         }
-        public override void CheckSemantics() => Body.CheckSemantics();
+        public override WalleType CheckSemantics() => WalleType.Undefined ; 
         
         public override void Execute() => CompilatorTools.AddFunction(this);
         public override object Run(List<IExpression> arguments)

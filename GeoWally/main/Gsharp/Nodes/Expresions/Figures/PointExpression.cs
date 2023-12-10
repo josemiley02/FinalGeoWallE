@@ -6,7 +6,8 @@ namespace Gsharp
     {
         Point point;
         string name;
-        public WallyType ReturnType => WallyType.Point;
+        Scope referencedScope ;
+        public WalleType ReturnType => WalleType.Point;
         float X;
         float Y;
 
@@ -16,8 +17,11 @@ namespace Gsharp
             this.X = X;
             this.Y = Y;
         }
-        public void GetScope(Scope Actual) { }
-        public void CheckSemantics() { }
+        public void GetScope(Scope actual) 
+        { 
+            referencedScope = new Scope(actual);
+        }
+        public WalleType CheckSemantics() => WalleType.Void;
         public object Evaluate()
         {
             Random r = new Random();

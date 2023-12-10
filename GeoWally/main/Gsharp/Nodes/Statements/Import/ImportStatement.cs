@@ -13,7 +13,7 @@ namespace Gsharp
         }
 
         public void GetScope(Scope actual) => referencedScope = actual;
-        public void CheckSemantics(){}
+        public WalleType CheckSemantics(){return WalleType.Void;}
         
         public void Execute()
         {

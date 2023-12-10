@@ -221,7 +221,9 @@ namespace Gsharp
                     break;
 
                 case TokenType.ArcKwToken:
+                    //figureExpression = new ArcExpression(NextToken().Value);
                     throw new NotImplementedException();
+                    break;
 
                 case TokenType.LineKwToken:
                 case TokenType.RayKwToken:
@@ -467,7 +469,7 @@ namespace Gsharp
             else if (Current.Type == TokenType.CloseKeyToken)
             {
                 NextToken();
-                return new SequenceLiteralExpression(new Sequence(Array.Empty<IExpression>()));
+                return new SequenceExpression(new Sequence(Array.Empty<IExpression>()));
             }
             return ParseRegularSequence();
         }
@@ -477,7 +479,7 @@ namespace Gsharp
             List<IExpression> items = ParseExpressionList();
             MatchKind(TokenType.CloseKeyToken);
             var sequence = new Sequence(items);
-            return new SequenceLiteralExpression(sequence);
+            return new SequenceExpression(sequence);
         }
 
         private IExpression ParseSequenceInRange()
@@ -489,7 +491,7 @@ namespace Gsharp
             MatchKind(TokenType.CloseKeyToken);
 
             var sequence = new Sequence(min, max);
-            return new SequenceLiteralExpression(sequence);
+            return new SequenceExpression(sequence);
         }
     }
 }

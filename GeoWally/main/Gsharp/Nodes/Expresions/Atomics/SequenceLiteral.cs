@@ -4,64 +4,48 @@ using System.Collections.Generic;
 
 namespace Gsharp
 {
-    public sealed class SequenceLiteralExpression : IExpression
+    public sealed class SequenceExpression : IExpression
     {
-        private Sequence sequence ;
-        public WallyType ReturnType => WallyType.Sequence ;
-        public WallyType itemsReturnType ;
-        public SequenceLiteralExpression(Sequence sequence)
+        public SequenceExpression(Sequence data)
         {
-            this.sequence = sequence;
-            itemsReturnType = GetItemsReturnType();
+            sequence = data;
         }
+        private Sequence sequence ; 
+        public WalleType ReturnType => WalleType.Sequence ;
+
         public void GetScope(Scope actual)
         {
-            if(sequence is Sequence)
+            if(!sequence.isInRange)
             {
-                foreach (var expression in sequence)
-                    expression.GetScope(actual);
-            }
-        }
-        public void CheckSemantics()
-        {
-            if(sequence is Sequence)
-            {
-                foreach(var expression in sequence)
-                    expression.CheckSemantics();
-            }
-        }
-        public object Evaluate() => sequence ;
-        public IEnumerable<object> EvaluateElements()
-        {
-            foreach (var item in sequence)
-            {
-                yield return item.Evaluate(); 
-            }
-        }
-        private WallyType GetItemsReturnType()
-        {
-            if(sequence is Sequence)
-                return WallyType.Number;
-            
-            WallyType temp = WallyType.Undefined ;
-            
-            foreach (var expression in sequence)
-            {
-                if(temp != WallyType.Undefined)
+                foreach (var item in sequence)
                 {
-                    if(expression.ReturnType == WallyType.Undefined)
-                        continue ;
-                    if(expression.ReturnType != temp)
-                        throw new ArgumentException("Return type of expressions in sequence must be same");
+                    item.GetScope(actual);
                 }
-                temp = expression.ReturnType ;    
             }
-            return temp ;
         }
+        public WalleType CheckSemantics()
+        {
+            if(! sequence.isInRange)
+            {
+                foreach(var item in sequence)
+                {
+                    item.CheckSemantics();
+                }
+            }
+            return WalleType.Sequence ;
+        }
+        public object Evaluate()
+        {
+            throw new NotImplementedException();
+        }
+
         public bool ConvertToBool()
         {
             return sequence.Count() != 0 ;
         }
+        public override string ToString()
+        {
+            return sequence.ToString();
+        }
     }
-    
 }

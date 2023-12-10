@@ -96,15 +96,15 @@ namespace Gsharp
         }
         internal static void LoadSystemFunctions()
         {
-            AddFunction(new PredefinedFunction("count", 1, WallyType.Number, SystemFunctionsPool.Count));
-            AddFunction(new PredefinedFunction("print", 1, WallyType.Text, SystemFunctionsPool.Print));
-            AddFunction(new PredefinedFunction("measure", 2, WallyType.Measure, SystemFunctionsPool.Measure));
-            AddFunction(new PredefinedFunction("line", 2, WallyType.Line, SystemFunctionsPool.Line));
-            AddFunction(new PredefinedFunction("segment", 2, WallyType.Line, SystemFunctionsPool.Segment));
-            AddFunction(new PredefinedFunction("ray", 2, WallyType.Line, SystemFunctionsPool.Ray));
-            AddFunction(new PredefinedFunction("circle", 2, WallyType.Circle, SystemFunctionsPool.Circle));
-            AddFunction(new PredefinedFunction("arc", 4, WallyType.Arc, SystemFunctionsPool.Arc));
-            AddFunction(new PredefinedFunction("intersect", 2, WallyType.Sequence, SystemFunctionsPool.Intersect));
+            AddFunction(new PredefinedFunction("count", 1, WalleType.Number, SystemFunctionsPool.Count));
+            AddFunction(new PredefinedFunction("print", 1, WalleType.Text, SystemFunctionsPool.Print));
+            AddFunction(new PredefinedFunction("measure", 2, WalleType.Measure, SystemFunctionsPool.Measure));
+            AddFunction(new PredefinedFunction("line", 2, WalleType.Line, SystemFunctionsPool.Line));
+            AddFunction(new PredefinedFunction("segment", 2, WalleType.Line, SystemFunctionsPool.Segment));
+            AddFunction(new PredefinedFunction("ray", 2, WalleType.Line, SystemFunctionsPool.Ray));
+            AddFunction(new PredefinedFunction("circle", 2, WalleType.Circle, SystemFunctionsPool.Circle));
+            AddFunction(new PredefinedFunction("arc", 4, WalleType.Arc, SystemFunctionsPool.Arc));
+            AddFunction(new PredefinedFunction("intersect", 2, WalleType.Sequence, SystemFunctionsPool.Intersect));
             
         }
         // Colores
@@ -121,13 +121,13 @@ namespace Gsharp
         }
         internal static bool IsFigure(IExpression expr)
         {
-            WallyType expressionType = expr.ReturnType ;
-            if(expressionType == WallyType.Sequence)
+            WalleType expressionType = expr.ReturnType ;
+            if(expressionType == WalleType.Sequence)
             {
                 return true ;
             }
                 
-            WallyType[] figures = new WallyType[]{WallyType.Point, WallyType.Segment, WallyType.Ray, WallyType.Line, WallyType.Circle, WallyType.Arc, WallyType.Undefined};
+            WalleType[] figures = new WalleType[]{WalleType.Point, WalleType.Segment, WalleType.Ray, WalleType.Line, WalleType.Circle, WalleType.Arc, WalleType.Undefined};
 
             
             foreach (var type in figures)
@@ -140,19 +140,19 @@ namespace Gsharp
 
         internal static int CompareExpressions(IExpression a, IExpression b)
         {
-            if (a.ReturnType == WallyType.Number && b.ReturnType == WallyType.Number)
+            if (a.ReturnType == WalleType.Number && b.ReturnType == WalleType.Number)
             {
                 double first = (double)a.Evaluate();
                 double second = (double)b.Evaluate();
                 return first.CompareTo(second);
             }
 
-            else if(a.ReturnType == WallyType.Measure && b.ReturnType == WallyType.Measure)
-                return ((measure)a.Evaluate()).CompareTo((measure)b.Evaluate());
+            else if(a.ReturnType == WalleType.Measure && b.ReturnType == WalleType.Measure)
+                return ((Measure)a.Evaluate()).CompareTo((Measure)b.Evaluate());
             
-            if(a.ReturnType == WallyType.Undefined)
+            if(a.ReturnType == WalleType.Undefined)
                 throw new ArgumentNullException($"{a}");
-            if(b.ReturnType == WallyType.Undefined)
+            if(b.ReturnType == WalleType.Undefined)
                 throw new ArgumentNullException($"{b}");
 
             throw new ArgumentException($"Impossible to compare {a.ReturnType} type with {b.ReturnType} type");

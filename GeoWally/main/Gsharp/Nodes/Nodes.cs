@@ -5,7 +5,7 @@ namespace Gsharp
     public interface INode
     {
         void GetScope(Scope Actual);
-        void CheckSemantics();
+        WalleType CheckSemantics();
     }
 
     public sealed class SyntaxTree 
@@ -18,7 +18,15 @@ namespace Gsharp
             Program = program;
             Enviroment = new Scope();
         }
-        public void CheckSemantics()
+        private void GetScope()
+        {
+            foreach(var statement in Program)
+            {
+                statement.GetScope(Enviroment);
+            }
+
+        }
+        private void CheckSemantics()
         {
             foreach (var statement in Program)
             {
@@ -26,7 +34,7 @@ namespace Gsharp
             }
         }
 
-        public void Execute()
+        private void Execute()
         {
             foreach (var statement in Program)
             {
@@ -36,10 +44,7 @@ namespace Gsharp
         
         public int Run()
         {
-            foreach(var statement in Program)
-            {
-                statement.GetScope(Enviroment);
-            }
+            GetScope();
             CheckSemantics();
             Execute();
             return 0 ;

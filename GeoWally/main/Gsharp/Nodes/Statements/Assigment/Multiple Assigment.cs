@@ -14,22 +14,39 @@ namespace Gsharp
         public override void GetScope(Scope actual)
         {
             referencedScope = actual;
-            foreach (string variable in variableNames)
-            {
-                if(variable != "_")
-                    referencedScope.CreateVariableInstance(variable, valueExpression.ReturnType);
-            }
             valueExpression.GetScope(actual);
         }
-        public override void CheckSemantics()
+        public override WalleType CheckSemantics()
         {
-            valueExpression.CheckSemantics();
-            if(valueExpression.ReturnType != WallyType.Sequence && valueExpression.ReturnType != WallyType.Undefined)
+            WalleType returnType = valueExpression.CheckSemantics();
+
+            if(valueExpression.ReturnType != WalleType.Sequence && valueExpression.ReturnType != WalleType.Undefined)
                 throw new ArgumentException("MultiAssigment statement value must return a sequence or undefined");
+            
+            for(int i = 0 ; i < variableNames.Count ; i++)
+            {
+                if(variableNames[i] == "_") // se salta los comodines
+                    continue ;
+
+                if(returnType == WalleType.Undefined) // si el valor asignado devuelve undefined se les asigna undefined
+                    referencedScope.CreateVariableInstance(variableNames[i] , WalleType.Undefined);
+                
+                else    // en estos casos el valor asignado devuelve una secuencia
+                {
+                    if(i == variableNames.Count - 1)  // si es la ultima variable su tipo es de secuencia
+                        referencedScope.CreateVariableInstance(variableNames[i] , WalleType.Sequence);
+                    
+                    else // sino su tipo es el tipo de items que devuelva la secuencia
+                    {
+                        referencedScope.CreateVariableInstance(variableNames[i] , ((Sequence)valueExpression.Evaluate()).ItemsType);
+                    }  
+                }
+            }
+            return WalleType.Void ;          
         }
         public override void Execute()
         {
-            if(valueExpression.ReturnType == WallyType.Undefined)
+            if(valueExpression.ReturnType == WalleType.Undefined)
             {
                 foreach (var item in variableNames)
                 {
@@ -37,7 +54,7 @@ namespace Gsharp
                 }
             }
 
-            Sequence values = (Sequence)valueExpression.Evaluate();
+            Sequence values = (Sequence) valueExpression.Evaluate();
             var SequenceEnumerator = values.GetEnumerator();
             
             for(int i = 0 ; i < variableNames.Count ; i++)

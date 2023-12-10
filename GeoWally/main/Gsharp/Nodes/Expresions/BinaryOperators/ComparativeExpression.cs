@@ -1,28 +1,25 @@
 namespace Gsharp  
-    {
+{
     public abstract class ComparativeExpression : BinaryOperatorExpression
     {
         protected ComparativeExpression(IExpression left , IExpression right , string operatorSymbol) : base(left, right,operatorSymbol){}
             
-        protected override bool SemanticCondition{
-            get
-            { 
-                if(left.ReturnType == WallyType.Undefined ||  right.ReturnType == WallyType.Undefined )
-                    return true ;
+        protected override bool SemanticCondition(WalleType leftType , WalleType rightType , out WalleType returnType)
+        { 
+            returnType = WalleType.Number;
+            if(leftType == WalleType.Undefined ||  rightType == WalleType.Undefined )
+                return true ;
             
-                else if(left.ReturnType == WallyType.Number && right.ReturnType == WallyType.Number)
-                    return true ;
+            else if(leftType == WalleType.Number && rightType == WalleType.Number)
+                return true ;
+            
+            else if(leftType == WalleType.Measure && rightType == WalleType.Measure)                    
+                return true ;
                 
-                else if(left.ReturnType == WallyType.Measure && right.ReturnType == WallyType.Measure)
-                    return true ;
-
-                // *poner comparacion entre measure y number
-                
-                return false ;
-            }
+            return false ;
         }
     }
-
+    
     public sealed class GreaterExpression : ComparativeExpression
     {
         public GreaterExpression(IExpression left , IExpression right , string operatorSymbol) : base(left,right,operatorSymbol){}

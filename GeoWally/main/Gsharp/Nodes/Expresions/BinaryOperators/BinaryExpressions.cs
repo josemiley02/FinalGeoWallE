@@ -7,8 +7,7 @@ namespace Gsharp
         protected IExpression left;
         protected IExpression right;
         protected string OperatorSymbol{get; private set ;}
-        public WallyType ReturnType{get; protected set;}
-        protected string semanticErrorMsg ;
+        public WalleType ReturnType{get; protected set;}
 
         protected BinaryOperatorExpression(IExpression left, IExpression right , string operatorSymbol)
         {
@@ -16,23 +15,27 @@ namespace Gsharp
             this.right = right;
 
             OperatorSymbol = operatorSymbol;
-            ReturnType = WallyType.Number;
-            semanticErrorMsg = $"Operator \"{OperatorSymbol}\" cannot be applied to WallyType.{left.ReturnType} and WallyType.{right.ReturnType} : {this}";
+            ReturnType = WalleType.Undefined;
         }
         public void GetScope(Scope actual)
         {
             left.GetScope(actual);
             right.GetScope(actual);
         }
-        public void CheckSemantics()
+        public WalleType CheckSemantics()
         {
-            left.CheckSemantics();
-            right.CheckSemantics();
-            if(!SemanticCondition)
-                throw new InvalidOperationException(semanticErrorMsg);
+            WalleType returnType ;
+            var leftType = left.CheckSemantics();
+            var rightType = right.CheckSemantics();
+
+            if(!SemanticCondition(leftType, rightType , out returnType))
+                throw new InvalidOperationException($"Operator \"{OperatorSymbol}\" cannot be applied to WalleType.{left.ReturnType} and WalleType.{right.ReturnType} : {this}");
+
+            ReturnType = returnType;
+            return ReturnType ;
         }
-        protected abstract bool SemanticCondition{get;}       
-        public abstract object Evaluate() ;
+        protected abstract bool SemanticCondition(WalleType leftType , WalleType rightType , out WalleType returnType);    
+        public abstract object Evaluate();
         public bool ConvertToBool() => (double)Evaluate() != 0 ;
         public override string ToString() => $"{left} {OperatorSymbol} {right}";
     }

@@ -10,7 +10,7 @@ namespace Gsharp
 
         public event Action<IFigure> DrawThis;
 
-        public WallyType ReturnType => WallyType.Void;
+        public WalleType ReturnType => WalleType.Void;
 
         public DrawStatement(IExpression argument)
         {
@@ -21,15 +21,16 @@ namespace Gsharp
         {
             parameter.GetScope(actual);
         }
-        public void CheckSemantics()
+        public WalleType CheckSemantics()
         {
             parameter.CheckSemantics();
             if (!CompilatorTools.IsFigure(parameter))
                 throw new ArgumentException("Draw expression parameter must be a figure");
+            return WalleType.Void ;
         }
         public void Execute()
         {
-            if (parameter.ReturnType == WallyType.Sequence)
+            if (parameter.ReturnType == WalleType.Sequence)
             {
                 Sequence sequence = (Sequence)parameter.Evaluate();
 
@@ -40,18 +41,6 @@ namespace Gsharp
                         DrawThis.Invoke((IFigure)element.Evaluate());
                     }
                     catch { };
-                }
-            }
-            if(parameter.ReturnType == WallyType.Sequence)
-            {
-                Sequence sequence = (Sequence)parameter.Evaluate();
-                
-                foreach(IExpression element in sequence)
-                {
-                    try{
-                        DrawThis.Invoke((IFigure)element.Evaluate());
-                    }
-                    catch{};
                 }
             }
             else

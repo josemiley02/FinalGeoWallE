@@ -6,15 +6,15 @@ namespace Gsharp
         public Line line { get; private set; }
         public string name;
         public TokenType lineTypes;
-        public WallyType ReturnType => WallyType.Line;
+        public WalleType ReturnType => WalleType.Line;
 
         public LineExpression(string name, TokenType lineTypes)
         {
             this.name = name;
             this.lineTypes = lineTypes;
         }
-        public void GetScope(Scope Actual){}
-        public void CheckSemantics(){}
+        public void GetScope(Scope actual){}
+        public WalleType CheckSemantics() => WalleType.Void;
 
         public object Evaluate()
         {

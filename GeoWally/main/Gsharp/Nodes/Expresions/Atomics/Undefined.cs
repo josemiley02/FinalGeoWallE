@@ -2,7 +2,7 @@ namespace Gsharp
 {
     public sealed class UndefinedExpression : LiteralExpression
     {
-        public override WallyType ReturnType => WallyType.Undefined;
+        public override WalleType ReturnType => WalleType.Undefined;
 
         public UndefinedExpression() : base(0) { }
 

@@ -7,7 +7,7 @@ public class FunctionCallExpression : IExpression , IStatement
 {
     public string Name{ get ; private set ;}
 
-    public WallyType ReturnType => CompilatorTools.SearchFunction(Name,args.Count).ReturnType ;
+    public WalleType ReturnType => CompilatorTools.SearchFunction(Name,args.Count).ReturnType ;
 
     private List<IExpression> args;
         
@@ -23,13 +23,14 @@ public class FunctionCallExpression : IExpression , IStatement
             item.GetScope(actual);
         }
     }
-    public void CheckSemantics()
+    public WalleType CheckSemantics()
     {
         foreach (var expression in args)
         {
             expression.CheckSemantics();
             // chequear que el tipo del argumento coincida con el esperado por la funcion
         }
+        return WalleType.Undefined;
     }
     public object Evaluate()
     {

@@ -8,9 +8,9 @@ namespace Gsharp
     {
         public static object Count(List<IExpression> expression)
         {
-            var sequence = (SequenceLiteralExpression)expression.ElementAt(0);
+            var sequence = (SequenceExpression)expression.ElementAt(0);
 
-            if (sequence.ReturnType == WallyType.Undefined)
+            if (sequence.ReturnType == WalleType.Undefined)
                 return new UndefinedExpression();
 
             int count = ((Sequence)sequence.Evaluate()).Count();
@@ -30,7 +30,7 @@ namespace Gsharp
         {
             Point p1 = (Point)expression.ElementAt(0).Evaluate() ;
             Point p2 = (Point)expression.ElementAt(1).Evaluate() ;
-            return new measure(p1.DistanceToPoint(p2));
+            return new Measure(p1.DistanceToPoint(p2));
         }
 
         public static object Line(List<IExpression> expression)
@@ -55,7 +55,7 @@ namespace Gsharp
         public static object Circle(List<IExpression> expression)
         {
             Point p = (Point) expression.ElementAt(0).Evaluate();
-            measure r = (measure) expression.ElementAt(1).Evaluate();
+            Measure r = (Measure) expression.ElementAt(1).Evaluate();
             return new Circle(p,r.ToFloat() , "CircleCenter " + p.Name);
         }
 
@@ -64,7 +64,7 @@ namespace Gsharp
             Point p1 = (Point) expressions.ElementAt(0).Evaluate();
             Point p2 = (Point) expressions.ElementAt(1).Evaluate();
             Point p3 = (Point) expressions.ElementAt(2).Evaluate();
-            measure m = (measure) expressions.ElementAt(3).Evaluate();
+            Measure m = (Measure) expressions.ElementAt(3).Evaluate();
 
             return new Arc(p1,p2,p3,m.ToFloat(), "ArcCenter " + p1.Name);
         }

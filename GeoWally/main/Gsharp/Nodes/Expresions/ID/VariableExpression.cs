@@ -2,11 +2,11 @@ using System;
 
 namespace Gsharp 
 {    
-    public class VariableExpression : IExpression
+    public sealed class VariableExpression : IExpression
     {
         public string Name;
-        public Scope localScope;
-        public WallyType ReturnType => (localScope != null) ? localScope.GetVariableType(Name) : WallyType.Undefined;
+        private Scope referencedScope;
+        public WalleType ReturnType => (referencedScope != null) ? referencedScope.GetVariableType(Name) : WalleType.Undefined;
 
         public VariableExpression(Token id)
         {
@@ -15,27 +15,22 @@ namespace Gsharp
         
         public void GetScope(Scope actual)
         {
-            localScope = actual;
+            referencedScope = actual;
         }
-        public void CheckSemantics()
+        public WalleType CheckSemantics()
         {
-            // el chequep semantico siempre se hace luego de GetScope por tanto la variable debe de estar definida en su scope
-            if(localScope is null)
-                throw new NullReferenceException($"Variable \"{this}\" does not exists in current context");
-            
-            localScope.GetVariableType(Name); // si la variable no ha sido definida da error
+            return referencedScope.GetVariableType(Name);
         }
         
         public object Evaluate()
         {
-            System.Console.WriteLine(localScope.GetVariable(Name));
-            return localScope.GetVariable(Name);
+            return referencedScope.GetVariableValue(Name);
         }
         public bool ConvertToBool()
         {
-            if(ReturnType == WallyType.Sequence)
+            if(ReturnType == WalleType.Sequence)
             {
-                var SequenceExp = new SequenceLiteralExpression((Sequence)Evaluate());
+                var SequenceExp = new SequenceExpression((Sequence)Evaluate());
                 return SequenceExp.ConvertToBool();
             }
             return (double)Evaluate() != 0 ;

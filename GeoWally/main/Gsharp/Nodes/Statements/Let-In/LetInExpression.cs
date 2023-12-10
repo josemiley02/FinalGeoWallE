@@ -7,7 +7,7 @@ namespace Gsharp
         public List<IStatement> Statements { get; private set; }
         public IExpression Body { get; private set; }
         private Scope localScope ;
-        public WallyType ReturnType => Body.ReturnType;
+        public WalleType ReturnType => Body.ReturnType;
 
         public LetInStatement (List<IStatement> statements , IExpression body)
         {
@@ -24,13 +24,13 @@ namespace Gsharp
             }
             Body.GetScope(localScope);
         }
-        public void CheckSemantics()
+        public WalleType CheckSemantics()
         {
             foreach (var statement in Statements)
             {
                 statement.CheckSemantics();
             }
-            Body.CheckSemantics();
+            return Body.CheckSemantics();
         }
 
         public object Evaluate()
