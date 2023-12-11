@@ -36,7 +36,7 @@ namespace Gsharp
         }
         public object Evaluate()
         {
-            throw new NotImplementedException();
+            return sequence;
         }
 
         public bool ConvertToBool()

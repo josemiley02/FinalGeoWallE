@@ -1,14 +1,15 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 namespace Gsharp
 {
     public class Scope
     {
         private Dictionary<string , Stack<object>> variableValues ;
         private Dictionary<string, WalleType> variableTypes;
-        private readonly Scope? parentScope ;
+        private readonly Scope parentScope ;
 
-        public Scope(Scope? parent = null)
+        public Scope(Scope parent = null)
         {
             variableValues = new Dictionary<string, Stack<object>>();
             variableTypes = new Dictionary<string, WalleType>();
@@ -37,11 +38,11 @@ namespace Gsharp
         }
         public object GetVariableValue(string name)
         {
-            if(variableValues.TryGetValue(name, out Stack<object>? valuesStack))
+            if(variableValues.TryGetValue(name, out Stack<object> valuesStack))
             {
-                if(valuesStack.TryPeek(out object? value))
+                if(valuesStack.Count > 0)
                 {
-                    return value ;
+                    return valuesStack.Peek() ;
                 }
                 throw new InvalidOperationException($"Variable \"{name}\" has not been initialized");
             }

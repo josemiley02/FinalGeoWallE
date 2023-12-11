@@ -69,7 +69,7 @@ namespace Gsharp
                     else
                         referencedScope.AssignVariable(variableNames.ElementAt(i), SequenceEnumerator.Current.Evaluate());
                 }
-                else
+                else if(variableNames[i] != "_")
                     referencedScope.AssignVariable(variableNames.ElementAt(i), 0);
             }
         }

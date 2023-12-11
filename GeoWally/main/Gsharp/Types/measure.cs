@@ -10,7 +10,7 @@ namespace Gsharp
             Value = value;
         }
 
-        public int CompareTo(Measure? other)
+        public int CompareTo(Measure other)
         {
             if (other == null)
                 throw new ArgumentNullException("Object instance not set to any value ");

@@ -223,7 +223,6 @@ namespace Gsharp
                 case TokenType.ArcKwToken:
                     //figureExpression = new ArcExpression(NextToken().Value);
                     throw new NotImplementedException();
-                    break;
 
                 case TokenType.LineKwToken:
                 case TokenType.RayKwToken:

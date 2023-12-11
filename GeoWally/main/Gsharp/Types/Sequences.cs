@@ -19,30 +19,30 @@ namespace Gsharp
             isInRange = true ;
             data = new List<IExpression>();
         }
-        private readonly bool isInRange ;
+        public bool isInRange { get; }
         private readonly int min ;
         private readonly int max ;
-        public WallyType ItemsType
+        public WalleType ItemsType
         {
             get{
                 if(isInRange)
-                    return WallyType.Number ;
+                    return WalleType.Number ;
                 
                 return GetItemsType();
             }
         }
 
-        private WallyType GetItemsType()
+        private WalleType GetItemsType()
         {
             var classEnumerator = GetEnumerator() ;
 
             if(! classEnumerator.MoveNext())
-                return WallyType.Undefined ;
+                return WalleType.Undefined ;
             
-            WallyType returnType = classEnumerator.Current.ReturnType ;
+            WalleType returnType = classEnumerator.Current.ReturnType ;
             foreach (var item in data)
             {
-                if(item.ReturnType != returnType && item.ReturnType != WallyType.Undefined)
+                if(item.ReturnType != returnType && item.ReturnType != WalleType.Undefined)
                     throw new ArgumentException($"Sequence's elements must have the same return type : {item}");
             }
             return returnType ;
