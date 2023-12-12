@@ -38,7 +38,7 @@ namespace Gsharp
                     
                     else // sino su tipo es el tipo de items que devuelva la secuencia
                     {
-                        referencedScope.CreateVariableInstance(variableNames[i] , ((Sequence)valueExpression.Evaluate()).ItemsType);
+                        referencedScope.CreateVariableInstance(variableNames[i] , WalleType.Undefined);
                     }  
                 }
             }

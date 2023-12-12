@@ -221,8 +221,7 @@ namespace Gsharp
                     break;
 
                 case TokenType.ArcKwToken:
-                    //figureExpression = new ArcExpression(NextToken().Value);
-                    throw new NotImplementedException();
+                    throw new InvalidOperationException("!Semantic Error : Invalid Expression : \"arc\"");
 
                 case TokenType.LineKwToken:
                 case TokenType.RayKwToken:

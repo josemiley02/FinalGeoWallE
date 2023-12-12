@@ -40,7 +40,7 @@ namespace Gsharp
                     {
                         DrawThis.Invoke((IFigure)element.Evaluate());
                     }
-                    catch { };
+                    catch {};
                 }
             }
             else
