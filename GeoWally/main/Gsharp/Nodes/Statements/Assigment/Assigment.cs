@@ -33,7 +33,7 @@
         }
         public override void Execute()
         {
-            referencedScope.AssignVariable(variableName, valueExpression.Evaluate());
+            referencedScope.AssignVariable(variableName, valueExpression.Evaluate(),valueExpression.ReturnType);
         }
         public override string ToString() => $"{variableName} = {valueExpression}" ;
     }

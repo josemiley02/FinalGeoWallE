@@ -20,17 +20,25 @@ namespace Gsharp
         {
             localScope = new Scope(actual);
             Body.GetScope(localScope);
+            CompilatorTools.AddFunction(this);
         }
-        public override WalleType CheckSemantics() => WalleType.Undefined ; 
+        public override WalleType CheckSemantics()
+        {
+            foreach (var parameter in parametersName)
+            {
+                localScope.CreateVariableInstance(parameter , WalleType.Undefined);
+            }
+            return Body.CheckSemantics();
+        }
         
-        public override void Execute() => CompilatorTools.AddFunction(this);
+        public override void Execute(){}
         public override object Run(List<IExpression> arguments)
         {
             for (int i = 0; i < parametersName.Count; i++)
             {
-                var valueTypePair = (arguments.ElementAt(i).Evaluate(), arguments.ElementAt(i).ReturnType);
-                localScope.AssignVariable(parametersName.ElementAt(i), valueTypePair);
+                localScope.AssignVariable(parametersName.ElementAt(i), arguments.ElementAt(i).Evaluate() , arguments.ElementAt(i).ReturnType);
             }
+            System.Console.WriteLine(Body.ReturnType);
             return Body.Evaluate();
         }
         public override void ResetScope()

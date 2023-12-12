@@ -7,7 +7,21 @@ namespace Gsharp
         private IExpression condition ;
         private IExpression trueBody ;
         private IExpression falseBody ;
-        public WalleType ReturnType => WalleType.Number;
+        public WalleType ReturnType
+        {
+            get
+            {
+                try
+                {
+                    return trueBody.ReturnType ;
+                }
+                catch
+                {
+                    return WalleType.Undefined;
+                }
+            }
+            private set{}
+        }
 
         public ConditionalExpression(IExpression condition, IExpression trueBody, IExpression falseBody)
         {
@@ -26,11 +40,14 @@ namespace Gsharp
         public WalleType CheckSemantics()
         {
             condition.CheckSemantics();
-            
-            if(trueBody.CheckSemantics() != falseBody.CheckSemantics())
+            var falseReturnType = falseBody.CheckSemantics(); 
+            var trueReturnType = trueBody.CheckSemantics() ;
+
+            if( trueReturnType != falseReturnType && falseReturnType != WalleType.Undefined && trueReturnType != WalleType.Undefined)
                 throw new InvalidOperationException("Then-Else branches of conditional statement must have the same return type : {this}");
 
-            return trueBody.ReturnType ;
+            ReturnType = trueBody.ReturnType ;
+            return ReturnType ;
         }
         public object Evaluate()
         {

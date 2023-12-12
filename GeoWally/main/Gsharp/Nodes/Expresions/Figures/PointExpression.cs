@@ -21,7 +21,7 @@ namespace Gsharp
         { 
             referencedScope = new Scope(actual);
         }
-        public WalleType CheckSemantics() => WalleType.Void;
+        public WalleType CheckSemantics() => WalleType.Point;
         public object Evaluate()
         {
             Random r = new Random();

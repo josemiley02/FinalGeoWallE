@@ -14,7 +14,7 @@ namespace Gsharp
             this.lineTypes = lineTypes;
         }
         public void GetScope(Scope actual){}
-        public WalleType CheckSemantics() => WalleType.Void;
+        public WalleType CheckSemantics() => WalleType.Line;
 
         public object Evaluate()
         {

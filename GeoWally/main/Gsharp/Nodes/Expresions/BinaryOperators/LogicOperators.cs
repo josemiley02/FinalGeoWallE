@@ -3,10 +3,13 @@ namespace Gsharp
     public abstract class LogicOperatorExpression : BinaryOperatorExpression
     {
         public LogicOperatorExpression(IExpression left, IExpression right, string operatorSymbol): base(left , right, operatorSymbol){}
-        protected override bool SemanticCondition(WalleType leftType , WalleType rightType , out WalleType returnType)
+
+        public override WalleType CheckSemantics()
         {
-            returnType = WalleType.Number;
-            return true ;
+            left.CheckSemantics();
+            right.CheckSemantics();
+            ReturnType = WalleType.Number;
+            return ReturnType ;
         }
     }
 

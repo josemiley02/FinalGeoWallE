@@ -50,7 +50,7 @@ namespace Gsharp
             {
                 foreach (var item in variableNames)
                 {
-                    referencedScope.AssignVariable(item , 0) ;
+                    referencedScope.AssignVariable(item , 0 , WalleType.Undefined) ;
                 }
             }
 
@@ -65,12 +65,12 @@ namespace Gsharp
                         continue ;
 
                     if(i == variableNames.Count - 1)
-                        referencedScope.AssignVariable(variableNames.ElementAt(i), values.Rest(i));
+                        referencedScope.AssignVariable(variableNames.ElementAt(i), values.Rest(i) , WalleType.Sequence);
                     else
-                        referencedScope.AssignVariable(variableNames.ElementAt(i), SequenceEnumerator.Current.Evaluate());
+                        referencedScope.AssignVariable(variableNames.ElementAt(i), SequenceEnumerator.Current.Evaluate(), values.ItemsType);
                 }
                 else if(variableNames[i] != "_")
-                    referencedScope.AssignVariable(variableNames.ElementAt(i), 0);
+                    referencedScope.AssignVariable(variableNames.ElementAt(i), 0 , WalleType.Undefined);
             }
         }
     }

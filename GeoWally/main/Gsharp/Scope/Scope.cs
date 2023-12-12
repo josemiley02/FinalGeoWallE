@@ -25,7 +25,13 @@ namespace Gsharp
             variableValues[name] = new Stack<object>(); 
         }
 
-        public void AssignVariable(string name , object value) => variableValues[name].Push(value) ;
+        public void AssignVariable(string name , object value , WalleType type)
+        {
+            if(variableTypes[name] == WalleType.Undefined)
+                variableTypes[name] = type ;
+                
+            variableValues[name].Push(value) ;
+        }
         public WalleType GetVariableType(string name)
         {
             if(variableTypes.ContainsKey(name))

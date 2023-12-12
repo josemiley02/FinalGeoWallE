@@ -13,7 +13,7 @@ namespace Gsharp
         }
         public void GetScope(Scope actual){}
         
-        public WalleType CheckSemantics() => WalleType.Void;
+        public WalleType CheckSemantics() => WalleType.Circle;
 
         public object Evaluate()
         {

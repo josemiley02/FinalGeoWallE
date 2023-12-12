@@ -4,79 +4,37 @@ namespace Gsharp
 {
     public abstract class ArithmeticExpression : BinaryOperatorExpression
     {
-        public ArithmeticExpression(IExpression left, IExpression right , string operatorSymbol) : base(left, right , operatorSymbol){}
-        
-        protected override bool SemanticCondition(WalleType leftType , WalleType rightType , out WalleType returnType)
-        { 
-            if(leftType == WalleType.Undefined)
-            {
-                returnType = rightType ;
-                return true;
-            }
-            else if(rightType == WalleType.Undefined)
-            {
-                returnType = leftType ;
-                return true;
-            }
-            
-            else if(leftType == WalleType.Number && rightType == WalleType.Number)
-            {
-                returnType = WalleType.Number;
-                return true ;
-            }
-            returnType = WalleType.Undefined ;        
-            return false ;
-        }
+        public ArithmeticExpression(IExpression left, IExpression right , string operatorSymbol) : base(left, right , operatorSymbol){}         
     }
 
     public sealed class SumExpression : ArithmeticExpression
     {
-        public SumExpression(IExpression left, IExpression right, string operatorSymbol) : base(left , right , operatorSymbol){}
-        protected override bool SemanticCondition(WalleType leftType , WalleType rightType , out WalleType returnType)
+        public SumExpression(IExpression left, IExpression right, string operatorSymbol) : base(left , right , operatorSymbol)
         {
-            if(base.SemanticCondition(leftType , rightType , out returnType))
-                return true ;
-        
-            else if(leftType == WalleType.Measure && rightType == WalleType.Measure)
-            {
-                returnType = WalleType.Measure ;
-                return true;
-            }
-
-            else if(leftType == WalleType.Sequence && rightType == WalleType.Sequence)
-            {
-                returnType = WalleType.Sequence ;    
-                return true ;
-            }
+            validTypes[ (WalleType.Sequence , WalleType.Sequence) ] = WalleType.Sequence ;
             
-            return false ;
+            validTypes[ (WalleType.Measure , WalleType.Measure) ] = WalleType.Measure ; 
         }
+        
+        
         public override object Evaluate()
         {
             if(left.ReturnType == WalleType.Measure)
                 return (Measure) left.Evaluate() + (Measure) right.Evaluate();
             
             // concatenar secuencias
-
             return (double)left.Evaluate() + (double)right.Evaluate();
         }
     }
         
     public sealed class RestExpression : ArithmeticExpression
     {
-        public RestExpression(IExpression left, IExpression right , string operatorSymbol) : base(left , right , operatorSymbol){}
-        protected override bool SemanticCondition(WalleType leftType , WalleType rightType , out WalleType returnType)
+        public RestExpression(IExpression left, IExpression right , string operatorSymbol) : base(left , right , operatorSymbol)
         {
-            if(base.SemanticCondition(leftType, rightType , out returnType))
-                return true ;
             
-            else if(leftType == WalleType.Measure && rightType == WalleType.Measure)
-            {
-                returnType = WalleType.Measure ;
-                return true ;
-            }
-            return false ;
+            validTypes[ (WalleType.Measure , WalleType.Measure) ] = WalleType.Measure ;
         }
+        
         
         public override object Evaluate()
         {
@@ -89,20 +47,12 @@ namespace Gsharp
 
     public sealed class MultiplicativeExpression : ArithmeticExpression
     {
-        public MultiplicativeExpression(IExpression left, IExpression right , string operatorSymbol) : base(left , right , operatorSymbol){}
-
-        protected override bool SemanticCondition(WalleType leftType , WalleType rightType , out WalleType returnType)
+        public MultiplicativeExpression(IExpression left, IExpression right , string operatorSymbol) : base(left , right , operatorSymbol)
         {
-            if(base.SemanticCondition(leftType, rightType, out returnType))
-                return true ;
             
-            else if((leftType == WalleType.Number && rightType == WalleType.Measure) || (leftType == WalleType.Measure && rightType == WalleType.Number))
-            {
-                returnType = WalleType.Measure ;
-                return true;
-            }
+            validTypes[ (WalleType.Number , WalleType.Measure) ] = WalleType.Measure ;
             
-            return false ;
+            validTypes[ (WalleType.Measure , WalleType.Number) ] = WalleType.Measure ;
         }
         public override object Evaluate()
         {
@@ -117,18 +67,12 @@ namespace Gsharp
 
     public sealed class DivisionExpression : ArithmeticExpression
     {
-        public DivisionExpression(IExpression left, IExpression right , string operatorSymbol) : base(left , right, operatorSymbol){}
-        protected override bool SemanticCondition(WalleType leftType , WalleType rightType , out WalleType returnType)
+        public DivisionExpression(IExpression left, IExpression right , string operatorSymbol) : base(left , right, operatorSymbol)
         {
-            if(base.SemanticCondition(leftType,rightType,out returnType))
-                return true ;
-            else if(leftType == WalleType.Measure && rightType == WalleType.Measure)
-            {
-                returnType = WalleType.Measure ;
-                return true; 
-            }
-            return false ;
+            
+            validTypes[ (WalleType.Measure , WalleType.Measure) ] = WalleType.Number ;
         }
+        
         public override object Evaluate()        
         {
             try

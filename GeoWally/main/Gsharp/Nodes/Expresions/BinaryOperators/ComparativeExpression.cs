@@ -2,24 +2,11 @@ namespace Gsharp
 {
     public abstract class ComparativeExpression : BinaryOperatorExpression
     {
-        protected ComparativeExpression(IExpression left , IExpression right , string operatorSymbol) : base(left, right,operatorSymbol){}
-            
-        protected override bool SemanticCondition(WalleType leftType , WalleType rightType , out WalleType returnType)
-        { 
-            returnType = WalleType.Number;
-            if(leftType == WalleType.Undefined ||  rightType == WalleType.Undefined )
-                return true ;
-            
-            else if(leftType == WalleType.Number && rightType == WalleType.Number)
-                return true ;
-            
-            else if(leftType == WalleType.Measure && rightType == WalleType.Measure)                    
-                return true ;
-                
-            return false ;
-        }
+        protected ComparativeExpression(IExpression left , IExpression right , string operatorSymbol) : base(left, right,operatorSymbol)
+        {
+            validTypes[(WalleType.Measure , WalleType.Measure)] = WalleType.Number;
+        }            
     }
-    
     public sealed class GreaterExpression : ComparativeExpression
     {
         public GreaterExpression(IExpression left , IExpression right , string operatorSymbol) : base(left,right,operatorSymbol){}
