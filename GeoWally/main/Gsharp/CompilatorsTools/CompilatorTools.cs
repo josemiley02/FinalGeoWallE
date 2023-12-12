@@ -116,8 +116,11 @@ namespace Gsharp
         }
         internal static void RestoreColor()
         {
-            if (ColorPool.Count > 1)
+            if (ColorPool.Count > 0)
                 ColorPool.Pop();
+            
+                
+            
         }
         internal static bool IsFigure(IExpression expr)
         {

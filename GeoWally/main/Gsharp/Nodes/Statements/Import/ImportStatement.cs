@@ -10,13 +10,12 @@ namespace Gsharp
         public ImportStatement(string url)
         {
             Url = url;
+            
         }
 
-        public void GetScope(Scope actual) => referencedScope = actual;
-        public WalleType CheckSemantics(){return WalleType.Void;}
-        
-        public void Execute()
+        public void GetScope(Scope actual)
         {
+            referencedScope = actual ;
             string code = File.ReadAllText(Url);
             var lexer = new Lexer(code);
             var parser = new Parser(lexer.GetTokenList());
@@ -28,7 +27,10 @@ namespace Gsharp
                 statement.CheckSemantics();
                 statement.Execute();
             }
-        }
+        } 
+        public WalleType CheckSemantics(){return WalleType.Void;}
+        
+        public void Execute(){}
         public override string ToString() => "import " + Url;
     }
 }
