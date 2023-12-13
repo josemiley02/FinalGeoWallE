@@ -101,12 +101,13 @@ namespace Geo_Wall_E
         #endregion
 
         #region Draw Section
-        public void DrawFigure(IFigure figure)
+        public void DrawFigure(IFigure figure, string color)
         {
             /*Este método es el encargado de dibujar las figuras, llamando al método correspondiente.
             Utiliza herramientas de Windows Form, el lector podrá darse cuenta de que hace cada método
             solamente leyendo el codigo*/
             Graphics graphics = lienzo.CreateGraphics();
+            Color actualColor = GetColor(color);
 
             /*Antes de agregar una figura a la lista preguntar si no existe ninguna con su mismo nombre
             Esta línea ayuda a la hora de trasladar las figuras en el lienzo*/
@@ -122,72 +123,72 @@ namespace Geo_Wall_E
             if (thisType == FigureType.Circle)
             {
                 Circle c1 = (Circle)figure;
-                MyDrawCircle(c1, graphics);
+                MyDrawCircle(c1, graphics, actualColor);
                 return;
             }
             if (thisType == FigureType.Segment)
             {
                 Segment l1 = (Segment)figure;
-                MyDrawSegment(l1, graphics);
+                MyDrawSegment(l1, graphics, actualColor);
                 return;
             }
             if (thisType == FigureType.Line)
             {
                 Line l1 = (Line)figure;
-                MyDrawLine(l1, graphics);
+                MyDrawLine(l1, graphics, actualColor);
                 return;
             }
             if (thisType == FigureType.Ray)
             {
                 Ray l1 = (Ray)figure;
-                MyDrawRay(l1, graphics);
+                MyDrawRay(l1, graphics, actualColor);
                 return;
             }
             if (thisType == FigureType.Arc)
             {
                 Arc a1 = (Arc)figure;
-                MyDrawArc(a1, graphics);
+                MyDrawArc(a1, graphics, actualColor);
                 return;
             }
         }
         //Draw point
         private void MyDrawPoint(Gsharp.Point point, Graphics graphics)
         {
-            graphics.FillEllipse(Brushes.Red, point.X - 3, point.Y - 3, 6, 6);
+            graphics.FillEllipse(Brushes.Black, point.X - 3, point.Y - 3, 6, 6);
             graphics.DrawString(point.Name, new Font("Arial", 10), Brushes.Black, point.X, point.Y);
         }
         //Draw Circle
-        private void MyDrawCircle(Circle circle, Graphics graphics)
+        private void MyDrawCircle(Circle circle, Graphics graphics, Color color)
         {
-            graphics.DrawEllipse(new Pen(System.Drawing.Color.Black), circle.Center.X - circle.Ratio, circle.Center.Y - circle.Ratio, (float)circle.Ratio * 2, (float)circle.Ratio * 2);
+            graphics.DrawEllipse(new Pen(color), circle.Center.X - circle.Ratio, circle.Center.Y - circle.Ratio, (float)circle.Ratio * 2, (float)circle.Ratio * 2);
             graphics.FillEllipse(Brushes.Black, circle.Center.X - 3, circle.Center.Y - 3, 6, 6);
         }
         //Draw Segment
-        private void MyDrawSegment(Segment line, Graphics graphics)
+        private void MyDrawSegment(Segment line, Graphics graphics, Color color)
         {
-            graphics.DrawLine(new Pen(System.Drawing.Color.Black), line.p1.X, line.p1.Y, line.p2.X, line.p2.Y);
-            graphics.FillEllipse(Brushes.Red, line.p1.X - 3, line.p1.Y - 3, 6, 6);
-            graphics.FillEllipse(Brushes.Red, line.p2.X - 3, line.p2.Y - 3, 6, 6);
+            graphics.DrawLine(new Pen(color), line.p1.X, line.p1.Y, line.p2.X, line.p2.Y);
+            graphics.FillEllipse(Brushes.Black, line.p1.X - 3, line.p1.Y - 3, 6, 6);
+            graphics.FillEllipse(Brushes.Black, line.p2.X - 3, line.p2.Y - 3, 6, 6);
         }
         //Draw Line
-        private void MyDrawLine(Line line, Graphics graphics)
+        private void MyDrawLine(Line line, Graphics graphics, Color color)
         {
             //Para dibujar una linea (recta en geometria) se usa la ecuación de la recta, para determinar
             //los interceptos con el ancho y alto del lienzo, conociendo los dos puntos por los que la recta pasa
             float m = line.GetPendiente();
             float n = line.p1.Y - m * line.p1.X;
             (Gsharp.Point, Gsharp.Point) interceps = GetIntersepts(m, n);
-            graphics.DrawLine(new Pen(System.Drawing.Color.Black), interceps.Item1.X, interceps.Item1.Y, interceps.Item2.X, interceps.Item2.Y);
-            graphics.FillEllipse(Brushes.Red, line.p1.X - 3, line.p1.Y - 3, 6, 6);
-            graphics.FillEllipse(Brushes.Red, line.p2.X - 3, line.p2.Y - 3, 6, 6);
+            graphics.DrawLine(new Pen(color), interceps.Item1.X, interceps.Item1.Y, interceps.Item2.X, interceps.Item2.Y);
+            graphics.FillEllipse(Brushes.Black, line.p1.X - 3, line.p1.Y - 3, 6, 6);
+            graphics.FillEllipse(Brushes.Black, line.p2.X - 3, line.p2.Y - 3, 6, 6);
         }
         //Draw Ray
-        private void MyDrawRay(Ray line, Graphics graphics)
+        private void MyDrawRay(Ray line, Graphics graphics, Color color)
         {
             //Cuando conoce el punto inicial del rayo, halla los interceptos con los extremos del lienzo
             //Mediante el uso del Vector Director y de la ecuacion de la recta se obtiene el sentido
             //del rayo y bueno, luego se pinta
-            graphics.DrawLine(new Pen(System.Drawing.Color.Black), line.p1.X, line.p1.Y, line.p2.X, line.p2.Y);
+            graphics.DrawLine(new Pen(color), line.p1.X, line.p1.Y, line.p2.X, line.p2.Y);
             float m = line.GetPendiente();
             float n = line.p1.Y - m * line.p1.X;
             (Gsharp.Point, Gsharp.Point) interceps = GetIntersepts(m, n);
@@ -200,21 +201,21 @@ namespace Geo_Wall_E
             //Verficar si el sentido del rayo es el mismo que el sentido de la izquierda
             if (vector1.Item1 > 0 && vector2.Item1 > 0 || vector1.Item1 < 0 && vector2.Item1 < 0)
             {
-                graphics.DrawLine(new Pen(System.Drawing.Color.Black), line.p1.X, line.p1.Y, interceps.Item1.X, interceps.Item1.Y);
+                graphics.DrawLine(new Pen(color), line.p1.X, line.p1.Y, interceps.Item1.X, interceps.Item1.Y);
             }
             //Verificar si el sentido del rayo es el mismo que el sentido de la derecha
             else if (vector1.Item1 > 0 && vector3.Item1 > 0 || vector1.Item1 < 0 && vector3.Item1 < 0)
             {
-                graphics.DrawLine(new Pen(System.Drawing.Color.Black), line.p1.X, line.p1.Y, interceps.Item2.X, interceps.Item2.Y);
+                graphics.DrawLine(new Pen(color), line.p1.X, line.p1.Y, interceps.Item2.X, interceps.Item2.Y);
             }
-            graphics.FillEllipse(Brushes.Red, line.p1.X - 3, line.p1.Y - 3, 6, 6);
-            graphics.FillEllipse(Brushes.Red, line.p2.X - 3, line.p2.Y - 3, 6, 6);
+            graphics.FillEllipse(Brushes.Black, line.p1.X - 3, line.p1.Y - 3, 6, 6);
+            graphics.FillEllipse(Brushes.Black, line.p2.X - 3, line.p2.Y - 3, 6, 6);
         }
-        private void MyDrawArc(Arc arc, Graphics graphics)
+        private void MyDrawArc(Arc arc, Graphics graphics, Color color)
         {
-            graphics.FillEllipse(Brushes.Red, arc.origin.X - 3, arc.origin.Y - 3, 6, 6);
-            graphics.FillEllipse(Brushes.Red, arc.first.X - 3, arc.first.Y - 3, 6, 6);
-            graphics.FillEllipse(Brushes.Red, arc.second.X - 3, arc.second.Y - 3, 6, 6);
+            graphics.FillEllipse(Brushes.Black, arc.origin.X - 3, arc.origin.Y - 3, 6, 6);
+            graphics.FillEllipse(Brushes.Black, arc.first.X - 3, arc.first.Y - 3, 6, 6);
+            graphics.FillEllipse(Brushes.Black, arc.second.X - 3, arc.second.Y - 3, 6, 6);
 
             float startAngle = GetAngle(arc.origin, arc.second);
             float endAngle = GetAngle(arc.origin, arc.first);
@@ -235,7 +236,22 @@ namespace Geo_Wall_E
                 sweepAngle = Math.Sign(endAngle) > 0 ? possitiveEnd + possitiveStart : 360 - possitiveEnd - possitiveStart;
             }
 
-            graphics.DrawArc(new Pen(System.Drawing.Color.Black), arc.origin.X - arc.measure, arc.origin.Y - arc.measure, arc.measure * 2, arc.measure * 2, startAngle, sweepAngle);
+            graphics.DrawArc(new Pen(color), arc.origin.X - arc.measure, arc.origin.Y - arc.measure, arc.measure * 2, arc.measure * 2, startAngle, sweepAngle);
+        }
+        private Color GetColor(string color)
+        {
+            switch (color)
+            {
+                case "red" : return Color.Red;
+                case "blue" : return Color.Blue;
+                case "yellow" : return Color.Yellow;
+                case "green" : return Color.Green;
+                case "cyan" : return Color.Cyan;
+                case "magenta" : return Color.Magenta;
+                case "white" : return Color.White;
+                case "gray" : return Color.Gray;
+                default: return Color.Black;
+            }
         }
         #endregion
 
@@ -281,7 +297,7 @@ namespace Geo_Wall_E
             foreach (var item in Figures)
             {
                 IFigure traslate = item.Traslate(X,Y);
-                DrawFigure(traslate);
+                DrawFigure(traslate, CompilatorTools.ColorPool.Peek());
                 traslates.Add(traslate);
             }
             Figures = traslates;

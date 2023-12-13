@@ -10,13 +10,12 @@ namespace Gsharp
         public ImportStatement(string url)
         {
             Url = url;
-            
         }
 
         public void GetScope(Scope actual)
         {
             referencedScope = actual ;
-            string code = File.ReadAllText(Url);
+            string code = File.ReadAllText(@".\Projects\" + Url + ".geo.txt");
             var lexer = new Lexer(code);
             var parser = new Parser(lexer.GetTokenList());
             var statementList = parser.ParseStatementList();

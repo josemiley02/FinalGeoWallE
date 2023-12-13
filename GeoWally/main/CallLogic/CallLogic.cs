@@ -12,6 +12,8 @@ namespace Geo_Wall_E.CallLogic
         public static SyntaxTree WorkWithCode(string code)
         {
             CompilatorTools.LoadSystemFunctions();
+            CompilatorTools.ColorPool.Clear();
+            CompilatorTools.ColorPool.Push("color black");
             Lexer lexer = new Lexer(code);
             Parser parser = new Parser(lexer.GetTokenList());
             SyntaxTree syntax = parser.ParseCode();

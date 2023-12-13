@@ -9,12 +9,6 @@
     {
         Arc, Circle, Line, Point, Ray, Segment,
     }
-
-    public enum Color
-    {
-        Black, Blue, Cyan, Gray, Green, Magenta, Red, White, Yellow
-    }
-
     public enum TokenType
     {
         // Tokens

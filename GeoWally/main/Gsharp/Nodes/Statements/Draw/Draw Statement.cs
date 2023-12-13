@@ -8,7 +8,7 @@ namespace Gsharp
         private readonly IExpression parameter;
         private readonly List<IFigure> figures = new List<IFigure>();
 
-        public event Action<IFigure> DrawThis;
+        public event Action<IFigure, string> DrawThis;
 
         public WalleType ReturnType => WalleType.Void;
 
@@ -38,7 +38,7 @@ namespace Gsharp
                 {
                     try
                     {
-                        DrawThis.Invoke((IFigure)element.Evaluate());
+                        DrawThis.Invoke((IFigure)element.Evaluate(), CompilatorTools.ColorPool.Peek());
                     }
                     catch {};
                 }
@@ -49,7 +49,7 @@ namespace Gsharp
 
                 foreach (var item in figures)
                 {
-                    DrawThis.Invoke(item);
+                    DrawThis.Invoke(item, CompilatorTools.ColorPool.Peek());
                 }
             }
         }
