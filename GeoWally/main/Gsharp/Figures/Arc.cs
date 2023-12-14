@@ -22,13 +22,10 @@ namespace Gsharp
 
         public IFigure Traslate(int X, int Y)
         {
-            this.first.X += X;
-            this.origin.X += X;
-            this.second.X += X;
-            this.first.Y += Y;
-            this.origin.Y += Y;
-            this.second.Y += Y;
-            return this;
+            Point newFirst = new Point(first.X += X, first.Y += Y, first.Name);
+            Point newSecond = new Point(second.X += X, second.Y += Y, second.Name);
+            Point newOrigin = new Point(origin.X += X, origin.Y += Y, origin.Name);
+            return new Arc(newOrigin, newFirst, newSecond, measure ,Name);
         }
 
         public FigureType GetFigureType()

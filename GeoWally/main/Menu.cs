@@ -28,5 +28,12 @@ namespace Geo_Wall_E
             process.StartInfo.FileName = @".\GeoWall-E.pdf";
             process.Start();
         }
+
+        private void ReportButton_Click(object sender, EventArgs e)
+        {
+            Process process = new Process();
+            process.StartInfo.FileName = @".\Informe 3er Proyecto.pdf";
+            process.Start();
+        }
     }
 }

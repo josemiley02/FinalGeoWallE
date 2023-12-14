@@ -91,6 +91,7 @@
             this.ReportButton.TabIndex = 4;
             this.ReportButton.Text = "Report";
             this.ReportButton.UseVisualStyleBackColor = true;
+            this.ReportButton.Click += new System.EventHandler(this.ReportButton_Click);
             // 
             // Menu
             // 

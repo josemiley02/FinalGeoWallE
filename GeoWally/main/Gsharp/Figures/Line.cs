@@ -98,28 +98,30 @@ namespace Gsharp
             if (figures is Circle)
             {
                 Circle c = (Circle)figures;
+                double p = n - c.Center.Y;
                 double A = m * m + 1;
-                double B = (2 * m * c.Center.Y) * (n - 1);
-                double C = 2 * n * c.Center.Y + Math.Pow(c.Center.X, 2) + Math.Pow(c.Center.X, 2) + (n * n) - (c.Ratio * c.Ratio);
+                double B = (2 * p * m) - 2 * c.Center.X;
+                double C = (c.Center.X * c.Center.X) + (p * p) - (c.Ratio * c.Ratio);
 
-                double D = B * B - 4 * A * C;
-
-                if (D > 0)
+                double D = (B * B) - (4 * A * C);
+                if(D > 0)
                 {
-                    double x1 = (-B + Math.Sqrt(D)) / A * 2;
-                    double x2 = (-B - Math.Sqrt(D)) / A * 2;
+                    double x1 = (-B + Math.Sqrt(D)) / (2 * A);
+                    double x2 = (-B - Math.Sqrt(D)) / (2 * A);
                     double y1 = m * x1 + n;
                     double y2 = m * x2 + n;
-                    yield return new Point((float)x1, (float)y1,"P");
-                    yield return new Point((float)x2, (float)y2, "P");
+                    yield return new Point((float)x1, (float)y1, "IC1");
+                    yield return new Point((float)x2, (float)y2, "IC2");
                 }
-                if (D == 0)
+                else if(D < 0)
                 {
-                    double X = -(B / A * 2);
-                    yield return new Point((float)X, (float)(m * X + n), "P");
+                    yield break;
                 }
                 else
-                    yield break;
+                {
+                    float X = (float)(-B / (A * 2));
+                    yield return new Point(X, (float)(m * X + n), "IC1");
+                }
             }
             if(figures is Arc)
             {
